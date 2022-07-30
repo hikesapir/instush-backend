@@ -1,11 +1,13 @@
 const dbService = require('../../services/db.service')
 const ObjectId = require('mongodb').ObjectId
+const PAGE_SIZE = 3
 
 
 async function query(filterBy) {
+    const { page } = filterBy
     try {
         const collection = await dbService.getCollection('post')
-        var posts = await collection.find().toArray()
+        var posts = await collection.find().skip(page * PAGE_SIZE).limit(PAGE_SIZE).toArray()
         return posts
     } catch (err) {
         // logger.error('cannot find Posts', err)

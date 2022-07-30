@@ -3,8 +3,8 @@ const postService = require('./post.service.js')
 // GET LIST
 async function getPosts(req, res) {
     try {
-        var filterBy = req.query
-        const Posts = await postService.query(filterBy)
+        var filterBy = req.query.params
+        const Posts = await postService.query(JSON.parse(filterBy))
 
         res.json(Posts)
     } catch (err) {
