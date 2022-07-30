@@ -4,11 +4,13 @@ const PAGE_SIZE = 3
 
 
 async function query(filterBy) {
-    const { page } = filterBy
-    // console.log('page', page);
+    const { page, pageSize = 3, userId } = filterBy
     try {
+        const criteria = _buildCriteria(filterBy)
         const collection = await dbService.getCollection('post')
-        var posts = await collection.find().sort({ createdAt: -1 }).skip(page * PAGE_SIZE).limit(PAGE_SIZE).toArray()
+        var posts = (page && pageSize || page === 0)
+            ? await collection.find(criteria).sort({ createdAt: -1 }).skip(page * PAGE_SIZE).limit(pageSize).toArray()
+            : await collection.find(criteria).sort({ createdAt: -1 }).toArray()
         var count = await collection.find().count()
         // console.log('count', count);
         const results = {
@@ -77,7 +79,11 @@ async function remove(postId) {
     }
 }
 
-
+function _buildCriteria(filterBy) {
+    var criteria = {}
+    if (filterBy.userId) criteria["by._id"] = filterBy.userId
+    return criteria
+}
 
 module.exports = {
     query,
