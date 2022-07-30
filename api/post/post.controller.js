@@ -5,7 +5,6 @@ async function getPosts(req, res) {
     try {
         var filterBy = req.query.params
         const Posts = await postService.query(JSON.parse(filterBy))
-
         res.json(Posts)
     } catch (err) {
         res.status(500).send({ err: 'Failed to get Posts' })

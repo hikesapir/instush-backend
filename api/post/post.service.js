@@ -5,10 +5,20 @@ const PAGE_SIZE = 3
 
 async function query(filterBy) {
     const { page } = filterBy
+    // console.log('page', page);
     try {
         const collection = await dbService.getCollection('post')
-        var posts = await collection.find().skip(page * PAGE_SIZE).limit(PAGE_SIZE).toArray()
-        return posts
+        var posts = await collection.find().sort({ createdAt: -1 }).skip(page * PAGE_SIZE).limit(PAGE_SIZE).toArray()
+        var count = await collection.find().count()
+        // console.log('count', count);
+        const results = {
+            posts,
+            info: {
+                maxPage: Math.ceil(count / PAGE_SIZE),
+                pageSize: PAGE_SIZE
+            }
+        }
+        return results
     } catch (err) {
         // logger.error('cannot find Posts', err)
         throw err
