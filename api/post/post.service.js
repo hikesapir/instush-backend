@@ -4,7 +4,7 @@ const PAGE_SIZE = 3
 
 
 async function query(filterBy) {
-    const { page, pageSize = 3, userId } = filterBy
+    const { page = 0, pageSize = 3, userId } = filterBy
     try {
         const criteria = _buildCriteria(filterBy)
         const collection = await dbService.getCollection('post')

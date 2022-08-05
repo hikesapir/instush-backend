@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
-const expressSession = require('express-session')
+// const expressSession = require('express-session')
 
 const app = express()
 const http = require('http').createServer(app)
@@ -25,21 +25,24 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   // Configuring CORS
   const corsOptions = {
-      // Make sure origin contains the url your frontend is running on
-      origin: ['http://127.0.0.1:8080', 'http://localhost:8080', 'http://127.0.0.1:3000', 'http://localhost:3000'],
-      credentials: true
+    // Make sure origin contains the url your frontend is running on
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
+    credentials: true
   }
   app.use(cors(corsOptions))
   dotenv.config()
 }
 
 const postRoutes = require('./api/post/post.routes')
+const authRoutes = require('./api/auth/auth.routes')
+
 
 
 // routes
-// app.all('*')
-// app.get('/', (req, res) => res.send('Hello!'))
+const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
+app.all('*', setupAsyncLocalStorage)
 
+app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
 
 // Make every server-side-route to match the index.html
