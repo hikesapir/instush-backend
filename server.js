@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const path = require('path')
 // const expressSession = require('express-session')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 const http = require('http').createServer(app)
@@ -17,6 +18,7 @@ const dotenv = require('dotenv')
 
 // Express App Config
 app.use(express.json())
+app.use(cookieParser())
 // app.use(session)
 
 if (process.env.NODE_ENV === 'production') {
