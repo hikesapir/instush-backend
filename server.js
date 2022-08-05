@@ -8,16 +8,16 @@ const http = require('http').createServer(app)
 const dotenv = require('dotenv')
 
 // session setup
-const session = expressSession({
-  secret: 'instushh',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false },
-})
+// const session = expressSession({
+//   secret: 'instushh',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: false },
+// })
 
 // Express App Config
 app.use(express.json())
-app.use(session)
+// app.use(session)
 
 if (process.env.NODE_ENV === 'production') {
   // Express serve static files on production environment
