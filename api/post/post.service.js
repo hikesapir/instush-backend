@@ -17,8 +17,9 @@ async function query(filterBy) {
         const results = {
             posts,
             info: {
-                maxPage: Math.ceil(count / PAGE_SIZE),
-                pageSize: PAGE_SIZE
+                results: posts.length,
+                maxPage: Math.ceil(count / pageSize),
+                pageSize: pageSize
             }
         }
         return results
