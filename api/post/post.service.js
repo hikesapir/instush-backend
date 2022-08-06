@@ -1,4 +1,5 @@
 const dbService = require('../../services/db.service')
+const logger = require('../../services/logger.service')
 const ObjectId = require('mongodb').ObjectId
 const PAGE_SIZE = 3
 
@@ -22,7 +23,7 @@ async function query(filterBy) {
         }
         return results
     } catch (err) {
-        // logger.error('cannot find Posts', err)
+        logger.error('cannot find Posts', err)
         throw err
     }
 }
@@ -33,7 +34,7 @@ async function getById(postId) {
         const post = await collection.findOne({ _id: ObjectId(postId) })
         return post
     } catch (err) {
-        // logger.error(`while finding post ${postId}`, err)
+        logger.error(`while finding post ${postId}`, err)
         throw err
     }
 }
@@ -63,7 +64,7 @@ async function update(post) {
         post._id = id
         return post
     } catch (err) {
-        // logger.error(`cannot update post ${postId}`, err)
+        logger.error(`cannot update post ${postId}`, err)
         throw err
     }
 }
@@ -74,7 +75,7 @@ async function remove(postId) {
         await collection.deleteOne({ _id: ObjectId(postId) })
         return postId
     } catch (err) {
-        // logger.error(`cannot remove post ${postId}`, err)
+        logger.error(`cannot remove post ${postId}`, err)
         throw err
     }
 }

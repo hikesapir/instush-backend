@@ -35,8 +35,9 @@ if (process.env.NODE_ENV === 'production') {
   dotenv.config()
 }
 
-const postRoutes = require('./api/post/post.routes')
 const authRoutes = require('./api/auth/auth.routes')
+const userRoutes = require('./api/user/user.routes')
+const postRoutes = require('./api/post/post.routes')
 
 
 
@@ -45,6 +46,7 @@ const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
 app.all('*', setupAsyncLocalStorage)
 
 app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
 
 // Make every server-side-route to match the index.html
