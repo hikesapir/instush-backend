@@ -44,7 +44,9 @@ const postRoutes = require('./api/post/post.routes')
 // routes
 const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
 app.all('*', setupAsyncLocalStorage)
-
+app.get('/ping',(req,res)=>{
+  res.send('pong!')
+})
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
