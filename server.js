@@ -23,7 +23,8 @@ app.use(cookieParser())
 
 if (process.env.NODE_ENV === 'production') {
   // Express serve static files on production environment
-  app.use(express.static(path.resolve(__dirname, 'public')))
+  // app.use(express.static(path.resolve(__dirname, 'public')))
+  app.use(cors({ origin: ['https://gamebrag.onrender.com'], credentials: true }))
 } else {
   // Configuring CORS
   const corsOptions = {
