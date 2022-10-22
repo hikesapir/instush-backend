@@ -21,20 +21,35 @@ app.use(express.json())
 app.use(cookieParser())
 // app.use(session)
 
-// if (process.env.NODE_ENV === 'production') {
-//   // Express serve static files on production environment
-//   // app.use(express.static(path.resolve(__dirname, 'public')))
-//   app.use(cors({ origin: ['https://gamebrag.onrender.com'], credentials: true }))
-// } else {
+if (process.env.NODE_ENV === 'production') {
+  // Express serve static files on production environment
+  app.use(express.static(path.resolve(__dirname, 'public')))
+  app.use(cors({
+    origin: ['https://instush.onrender.com', 'http://instush.onrender.com'],
+    credentials: true
+  }))
+  // app.use(function(req, res, next) {
+  //   // res.header("Access-Control-Allow-Origin", "*");
+  //   const allowedOrigins = ['http://localhost:3000', 'http://gamebrag.onrender.com', 'https://gamebrag.onrender.com'];
+  //   const origin = req.headers.origin;
+  //   if (allowedOrigins.includes(origin)) {
+  //        res.setHeader('Access-Control-Allow-Origin', origin);
+  //   }
+  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  //   res.header("Access-Control-Allow-credentials", true);
+  //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+  //   next();
+  // });
+} else {
   // Configuring CORS
   const corsOptions = {
     // Make sure origin contains the url your frontend is running on
-    origin: ['http://127.0.0.1:3000', 'http://localhost:3000','https://instush.onrender.com','http://instush.onrender.com'],
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000', 'https://instush.onrender.com', 'http://instush.onrender.com'],
     credentials: true
   }
   app.use(cors(corsOptions))
   dotenv.config()
-// }
+}
 
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
@@ -45,7 +60,7 @@ const postRoutes = require('./api/post/post.routes')
 // routes
 const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
 app.all('*', setupAsyncLocalStorage)
-app.get('/ping',(req,res)=>{
+app.get('/ping', (req, res) => {
   res.send('pong!')
 })
 app.use('/api/auth', authRoutes)
