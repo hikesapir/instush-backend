@@ -21,20 +21,20 @@ app.use(express.json())
 app.use(cookieParser())
 // app.use(session)
 
-if (process.env.NODE_ENV === 'production') {
-  // Express serve static files on production environment
-  // app.use(express.static(path.resolve(__dirname, 'public')))
-  app.use(cors({ origin: ['https://gamebrag.onrender.com'], credentials: true }))
-} else {
+// if (process.env.NODE_ENV === 'production') {
+//   // Express serve static files on production environment
+//   // app.use(express.static(path.resolve(__dirname, 'public')))
+//   app.use(cors({ origin: ['https://gamebrag.onrender.com'], credentials: true }))
+// } else {
   // Configuring CORS
   const corsOptions = {
     // Make sure origin contains the url your frontend is running on
-    origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000','https://gamebrag.onrender.com'],
     credentials: true
   }
   app.use(cors(corsOptions))
   dotenv.config()
-}
+// }
 
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
