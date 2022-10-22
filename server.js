@@ -29,7 +29,7 @@ app.use(cookieParser())
   // Configuring CORS
   const corsOptions = {
     // Make sure origin contains the url your frontend is running on
-    origin: ['http://127.0.0.1:3000', 'http://localhost:3000','https://gamebrag.onrender.com','http://gamebrag.onrender.com'],
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000','https://instush.onrender.com','http://instush.onrender.com'],
     credentials: true
   }
   app.use(cors(corsOptions))
